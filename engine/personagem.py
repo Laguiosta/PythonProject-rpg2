@@ -20,17 +20,16 @@ class Personagem:
     def get_nivel(self):
         return self.__nivel
     
+    @property
+    def vida(self):
+        return self.__vida
+    
+    @vida.setter
+    def vida(self, nova_vida):
+         self.__vida = nova_vida
 
     #   Funções da classe
-    def receber_dano(self, dano):
-        self.__vida -= dano
-        if self.__vida <= 0:
-            self.__vida = 0
 
-    def atacar(self, alvo):
-        dano = randint(self.__nivel * 2, self.__nivel * 4)
-        alvo.receber_dano(dano)
-        return f"{self.__nome} Atacou {alvo.get_nome()} e causou {Cores.VERMELHO}{dano}{Cores.RESET} de dano"
 
     def status(self):
         print(f"Vida: {self.__vida} | Mana: {self.__mana} | Nivel: {self.__nivel}")
