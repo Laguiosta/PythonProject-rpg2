@@ -46,10 +46,6 @@ PythonProject-rpg2
 │
 └── main.py
 
-yaml
-Copiar código
-
----
 
 ## How the Game Works
 
@@ -66,9 +62,6 @@ Player Turn
 Enemy Turn
 ↓
 Check Victory or Defeat
-
-yaml
-Copiar código
 
 Players can:
 
@@ -105,6 +98,7 @@ Planned features for future versions:
 - Mana system for abilities
 - Ability cooldowns
 - Different enemy types
+  
 - Experience and leveling system
 - Weapon abilities
 - AI improvements for enemies
