@@ -1,6 +1,7 @@
 from random import randint
 from utils.cores import Cores
 from habilidades.habilidade_base import *
+from habilidades.habilidades_comuns import *
 
 
 class Personagem:
@@ -38,6 +39,14 @@ class Personagem:
     @vida.setter
     def vida(self, nova_vida):
          self.__vida = nova_vida
+
+    @property
+    def mana(self):
+        return self.__mana
+    
+    @mana.setter
+    def mana(self, nova_mana):
+         self.__mana = nova_mana
 
     #   Funções da classe
 

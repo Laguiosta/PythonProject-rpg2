@@ -4,6 +4,7 @@ from habilidades.habilidade_base import *
 
 
 class Combate:
+    contador_do_turno = 0 
     def receber_dano(self, alvo, dano):
         alvo.vida -= dano
         if alvo.get_vida() <= 0:
@@ -15,7 +16,19 @@ class Combate:
         return f"\n{atacante.get_nome()} Atacou {alvo.get_nome()} e causou {Cores.VERMELHO}{dano}{Cores.RESET} de dano"
     
     def atacar_habilidade(self, atacante, habilidade, alvo):
+        if atacante.get_mana() < habilidade.get_custo_mana():
+            return f"Mana insuficiente para usar {habilidade.get_nome()}"
+        
+        if not habilidade.pode_usar():
+            return f"{habilidade.get_nome()} em recarga {habilidade.get_tempo_resfriamento()}"
+            
+        atacante.mana -= habilidade.get_custo_mana()
         dano = randint(atacante.get_nivel() * 2, atacante.get_nivel() * 4) + habilidade.get_dano()
         self.receber_dano(alvo, dano)
+        habilidade.iniciar_cooldown()
         return f"\n{atacante.get_nome()} Usou {Cores.VERDE}{habilidade.get_nome()}{Cores.RESET} e causou {Cores.VERMELHO}{dano}{Cores.RESET} de dano"
+    
+    def contador_turno(self):
+        while True:
+            contador_do_turno += 1
         
