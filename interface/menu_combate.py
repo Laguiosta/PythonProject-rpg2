@@ -1,7 +1,5 @@
 from engine.combate import Combate
-from habilidades.habilidade_base import *
-from engine.personagem import *
-from utils.atalhos import *
+from utils.atalhos import limpar_tela, linha, pressione_continuar, print_titulo
 
 combate = Combate()
 
@@ -30,7 +28,8 @@ def turno_inimigo(personagem, inimigo):
 
     print_titulo('ENEMY TURN')
 
-    print(combate.atacar(inimigo, personagem))
+    mensagem, _ = combate.atacar(inimigo, personagem)
+    print(mensagem)
 
     pressione_continuar()
 
@@ -39,6 +38,7 @@ def menu_combate(personagem, inimigo):
 
     while personagem.get_vida() > 0 and inimigo.get_vida() > 0:
 
+        limpar_tela()
         turno_personagem(personagem, inimigo)
 
         acao_realizada = False
@@ -48,16 +48,15 @@ def menu_combate(personagem, inimigo):
         except ValueError:
             print("Opção inválida")
             pressione_continuar()
-            limpar_tela()
             continue
 
 
         # ATAQUE NORMAL
         if choice_opcao == 1:
 
-            print(combate.atacar(personagem, inimigo))
+            mensagem, acao_realizada = combate.atacar(personagem, inimigo)
+            print(mensagem)
             pressione_continuar()
-            acao_realizada = True
 
 
         # MENU DE HABILIDADES
@@ -83,7 +82,6 @@ def menu_combate(personagem, inimigo):
 
                 # VOLTAR SEM GASTAR TURNO
                 if choice_habilidade == 0:
-                    limpar_tela()
                     break
 
                 if choice_habilidade < 1 or choice_habilidade > len(personagem.habilidades):
@@ -95,7 +93,7 @@ def menu_combate(personagem, inimigo):
 
                 limpar_tela()
 
-                resultado = combate.atacar_habilidade(
+                resultado, sucesso = combate.atacar_habilidade(
                     personagem,
                     habilidade_escolhida,
                     inimigo
@@ -105,7 +103,7 @@ def menu_combate(personagem, inimigo):
 
                 pressione_continuar()
 
-                if "causou" in resultado:
+                if sucesso:
                     acao_realizada = True
                     break
 
@@ -113,13 +111,11 @@ def menu_combate(personagem, inimigo):
         else:
             print("Escolha uma opção válida")
             pressione_continuar()
-            limpar_tela()
             continue
 
 
         # se nenhuma ação válida aconteceu, reinicia turno
         if not acao_realizada:
-            limpar_tela()
             continue
 
 
@@ -127,15 +123,11 @@ def menu_combate(personagem, inimigo):
             break
 
 
-        limpar_tela()
-
         # TURNO DO INIMIGO
         turno_inimigo(personagem, inimigo)
 
         # REDUZ COOLDOWN
         reduzir_cooldowns(personagem)
-
-        limpar_tela()
 
 
     personagem.status()

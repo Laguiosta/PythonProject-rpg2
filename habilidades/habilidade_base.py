@@ -37,9 +37,7 @@ class Habilidade:
             return  self.__habilidade_negada
         
     def pode_usar(self):
-        if self.__tempo_resfriamento == 0:
-            self.__tempo_resfriamento = self.__cooldown
-            return self.__tempo_resfriamento
+        return self.__tempo_resfriamento == 0
         
     def reduzir_cooldown(self):
         if self.__tempo_resfriamento > 0:

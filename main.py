@@ -1,6 +1,5 @@
 from engine.personagem import Personagem
-from engine.item import *
-from interface.menu_combate import *
+from interface.menu_combate import menu_combate
 
 class Jogo:
     def __init__(self):

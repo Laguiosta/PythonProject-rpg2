@@ -1,7 +1,4 @@
-from random import randint
-from utils.cores import Cores
-from habilidades.habilidade_base import *
-from habilidades.habilidades_comuns import *
+from habilidades.habilidades_comuns import ataque_rapido, soco
 
 
 class Personagem:
