@@ -26,14 +26,15 @@ class Combate:
         print("\n1 - Atacar")
         print("2 - Usar habilidade")
         print("3 - Ver status")
-        print("4 - Fugir")
+        print("4 - Inventário")
+        print("5 - Fugir")
         while True:
             try:
                 escolha = int(input("\nEscolha uma opção: "))
             except ValueError:
                 print("Opção inválida.")
                 continue
-            if escolha in (1, 2, 3, 4):
+            if escolha in (1, 2, 3, 4, 5):
                 return escolha
             print("Opção inválida.")
 
@@ -48,12 +49,61 @@ class Combate:
                 print(self.heroi.atacar(self.inimigo))
                 self._pausar_e_limpar()
             elif escolha == 2:
-                print(self.heroi.usar_habilidade_da_arma(self.inimigo))
-                self._pausar_e_limpar()
+                if not self.heroi.habilidades:
+                    print("Você não possui habilidades no momento.")
+                    self._pausar_e_limpar()
+                else:
+                    print("\n=== HABILIDADES ===")
+                    for i, hab in enumerate(self.heroi.listar_habilidades(), start=1):
+                        print(f"{i} - {hab.get_nome()} - {hab.get_descricao()}")
+                    print("0 - Voltar")
+
+                    try:
+                        escolha_hab = int(input("\nEscolha uma habilidade: "))
+                    except ValueError:
+                        print("Opção inválida.")
+                        self._pausar_e_limpar()
+                        continue
+
+                    if escolha_hab == 0:
+                        continue
+
+                    indice = escolha_hab - 1
+                    mensagem = self.heroi.usar_habilidade(indice, self.inimigo)
+                    print(mensagem)
+                    self._pausar_e_limpar()
             elif escolha == 3:
                 self.exibir_status()
                 continue
             elif escolha == 4:
+                itens = self.heroi.inventario.listar_itens()
+                if not itens:
+                    print("Seu inventário está vazio.")
+                    self._pausar_e_limpar()
+                    continue
+
+                print("\n=== INVENTÁRIO ===")
+                for i, item in enumerate(itens, start=1):
+                    print(f"{i} - {item.get_nome()} - {item.get_descricao()}")
+                print("0 - Voltar")
+
+                try:
+                    escolha_item = int(input("\nEscolha um item para usar: "))
+                except ValueError:
+                    print("Opção inválida.")
+                    self._pausar_e_limpar()
+                    continue
+
+                if escolha_item == 0:
+                    continue
+
+                indice_item = escolha_item - 1
+                mensagem_item = self.heroi.inventario.usar_item_por_indice(indice_item, self.heroi)
+                print(mensagem_item)
+                self._pausar_e_limpar()
+                # Usar item não gasta o turno do inimigo
+                continue
+            elif escolha == 5:
                 self.fugiu = True
                 break
 

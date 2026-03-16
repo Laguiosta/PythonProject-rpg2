@@ -23,3 +23,17 @@ class Item:
         print("=" * tamanho)
         print(f"\n{self.__nome}: {self.__descricao}")
 
+    def usar(self, alvo: "Personagem") -> str:  # type: ignore[name-defined]
+        # Itens genéricos não fazem nada por padrão
+        return f"{self.__nome} não pode ser usado agora."
+
+
+class PocaoCura(Item):
+    def __init__(self, nome: str, descricao: str, valor: int, cura: int) -> None:
+        super().__init__(nome, descricao, valor)
+        self.__cura = int(cura)
+
+    def usar(self, alvo: "Personagem") -> str:  # type: ignore[name-defined]
+        valor_curado = alvo.curar(self.__cura)
+        return f"{alvo.get_nome()} usa {self.get_nome()} e recupera {valor_curado} de vida."
+
