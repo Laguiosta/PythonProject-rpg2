@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import os
+import time
+
 from models.heroi import Heroi
 from models.inimigo import Inimigo
 
@@ -14,6 +17,11 @@ class Combate:
         print("\n=== STATUS ===")
         print(f"{self.heroi.get_nome()}: {self.heroi.get_vida()}/{self.heroi.get_vida_maxima()}")
         print(f"{self.inimigo.get_nome()}: {self.inimigo.get_vida()}/{self.inimigo.get_vida_maxima()}")
+
+    def _pausar_e_limpar(self) -> None:
+        input("\nPressione ENTER para continuar...")
+        # Limpa a tela (Windows / Unix-like)
+        os.system("cls" if os.name == "nt" else "clear")
 
     def menu(self) -> int:
         print("\n1 - Atacar")
@@ -39,8 +47,10 @@ class Combate:
 
             if escolha == 1:
                 print(self.heroi.atacar(self.inimigo))
+                self._pausar_e_limpar()
             elif escolha == 2:
                 print(self.heroi.usar_habilidade_da_arma(self.inimigo))
+                self._pausar_e_limpar()
             elif escolha == 3:
                 self.exibir_status()
                 continue
