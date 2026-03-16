@@ -14,7 +14,10 @@ class Combate:
 
     def exibir_status(self) -> None:
         print("\n=== STATUS ===")
-        print(f"{self.heroi.get_nome()}: {self.heroi.get_vida()}/{self.heroi.get_vida_maxima()}")
+        linha_heroi = f"{self.heroi.get_nome()} ({self.heroi.get_classe()}): {self.heroi.get_vida()}/{self.heroi.get_vida_maxima()}"
+        linha_heroi += f" | For: {self.heroi.get_forca()} Des: {self.heroi.get_destreza()} Int: {self.heroi.get_inteligencia()} Sor: {self.heroi.get_sorte()}"
+        linha_heroi += f" | Mana: {self.heroi.get_mana()}/{self.heroi.get_mana_maxima()}"
+        print(linha_heroi)
         print(f"{self.inimigo.get_nome()}: {self.inimigo.get_vida()}/{self.inimigo.get_vida_maxima()}")
 
     def _pausar_e_limpar(self) -> None:
